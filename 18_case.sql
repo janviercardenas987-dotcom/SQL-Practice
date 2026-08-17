@@ -1,0 +1,35 @@
+SELECt *,
+CASE
+WHEN age >= 18 THEN TRUE
+	ELSE FALSE
+END AS '¿Es mayor de edad?' 
+FROM users;
+
+/*REALIZAR UNA CONSULTA VISUALIZANDO LOS CAMPOS FECHA, SECCION, NOMBRE, ARTICULO Y PRECIO DE LA TABLA
+PRODCUTOSN Y UN CAMPO NUEVO QUE NOMBRAMOS CON EL TEXTO "DTO2$_EN_CERAMICA". DEBE MOSTRAR EL RESULTADO 
+DE APLICAR SOBRE EL CAMPO PRECIO LA RESTA DE 2 SOLO A LOS ARTICULOS DE LA SEECION CREAMICA. EL FORMATO DEL NUEVO
+CAMPO DEBE APARECER CON 2 LUGARES DECIMALES. ORDENAR EL RESULTADO DE LA CONSULTA POR EL CAMPO FECHA DESCENDENTE*/
+
+SELECT 
+    fecha, 
+    seccion, 
+    nombre_producto, 
+    precio,
+    ROUND(CASE 
+            WHEN seccion = 'CERÁMICA' THEN precio - 2 
+            ELSE precio 
+        END
+    ) AS "dto2$_en_ceramicas"
+FROM 
+    productos
+ORDER BY 
+    fecha DESC;
+
+SELECT nombre_producto, seccion, precio,
+ROUND(
+CASE
+WHEN seccion = 'FERRETERÍA' THEN precio + (precio * 0.2)
+ELSE precio
+END
+) AS "precio_aumentado_en_2%" 
+FROM productos

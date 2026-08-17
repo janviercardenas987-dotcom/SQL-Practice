@@ -1,0 +1,1 @@
+SELECT * FROM users WHERE age  BETWEEN 20 AND 30; -- se usa para definir un rango min y max a buscar en la tabla

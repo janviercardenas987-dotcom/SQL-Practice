@@ -1,0 +1,1 @@
+SELECT DISTINCT * FROM users; -- seleccionar atributos distintos en la tabla

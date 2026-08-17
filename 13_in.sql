@@ -1,0 +1,1 @@
+SELECT * FROM users WHERE name IN('Juan', 'Carlos'); -- para buscar un resultado especifico obviando  si es lower or upper
