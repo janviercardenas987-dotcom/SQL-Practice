@@ -124,3 +124,66 @@ create table reservation_detail(
 	constraint fk_plate_number foreign key(plate_number)
 	references car(plate_number)
 );
+
+create table empleado(
+	codigo_empleado int generated always as identity,
+	cedula int unique not null,
+	nombre varchar(45) not null,
+	segundo_nombre varchar(45),
+	apellido_paterno varchar(45) not null,
+	apellido_materno varchar(45) not null,
+	telefono varchar(20),
+	email varchar(45) unique,
+	cargo varchar(45),
+	fecha_alta date default current_date,
+	constraint pk_empleado primary key(codigo_empleado)
+);
+
+create table producto(
+	codigo_producto int generated always as identity,
+	seccion varchar(60) not null,
+	nombre_producto varchar(45) not null,
+	precio decimal check(precio > 0),
+	pais_origen varchar(45),
+	constraint pk_producto primary key(codigo_producto)
+);
+
+--	constraint fk_reserv_code foreign key(reserv_code)
+
+create table pedido(
+	codigo_pedido int generated always as identity,
+	fecha date default current_date,
+	forma_pago varchar(45) check(forma_pago in 'efectivo', 'tarjeta', 'tranferencia'),
+	codigo_cliente int not null,
+	constraint pk_codigo_pedido primary key(codigo_pedido),
+	constraint fk_codigo_cliente foreign key(codigo_cliente)
+	references cliente(codigo_cliente) on delete restrict
+
+);
+
+create table detalle_pedido(
+	codigo_detalle int generated always as identity,
+	cantidad int check (cantidad > 0),
+	precio_venta decimal check(precio_venta > 0),
+	codigo_producto int not null,
+	codigo_pedido int not null,
+	
+	constraint pk_codigo_detalle primary key(codigo_detalle),
+	
+	constraint fk_codigo_producto foreign key(codigo_producto) 	
+	references producto(codigo_producto),
+,
+	constraint fk_codigo_pedido foreign key(codigo_pedido)
+	references pedido(codigo_pedido)
+);
+
+CREATE TABLE detalle_pedido (
+    codigo_detalle INT GENERATED ALWAYS AS IDENTITY,
+    cantidad INT CHECK (cantidad > 0),
+    precio_venta DECIMAL(10, 2) CHECK (precio_venta > 0),
+    codigo_producto INT NOT NULL,
+    codigo_pedido INT NOT NULL,
+    CONSTRAINT pk_detalle_pedido PRIMARY KEY (codigo_detalle),
+    CONSTRAINT fk_detalle_producto FOREIGN KEY (codigo_producto) REFERENCES producto(codigo_producto) ON DELETE RESTRICT,
+    CONSTRAINT fk_detalle_pedido FOREIGN KEY (codigo_pedido) REFERENCES pedido(codigo_pedido) ON DELETE CASCADE
+);
